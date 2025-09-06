@@ -280,7 +280,7 @@ enum AppConstants {
       defaultConfigurations.merge(newConfigs, uniquingKeysWith: { old, _ in old })
       return defaultConfigurations
     }else{
-      return  defaultConfigurations
+      return defaultConfigurations
     }
   }
 
