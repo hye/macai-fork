@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct AppConstants {
+enum AppConstants {
     static let requestTimeout: TimeInterval = 180
     static let apiUrlChatCompletions: String = "https://api.openai.com/v1/chat/completions"
     static let chatGptDefaultModel = "gpt-4o"
@@ -141,141 +141,156 @@ struct AppConstants {
         var modelsFetching: Bool = true
         var imageUploadsSupported: Bool = false
     }
+  static var defaultConfigurations:[String:defaultApiConfiguration] = [
+      "chatgpt": defaultApiConfiguration(
+          name: "OpenAI",
+          url: "https://api.openai.com/v1/chat/completions",
+          apiKeyRef: "https://platform.openai.com/docs/api-reference/api-keys",
+          apiModelRef: "https://platform.openai.com/docs/models",
+          defaultModel: "gpt-4o",
+          models: [
+              "o1-preview",
+              "o1-mini",
+              "gpt-4o",
+              "chatgpt-4o-latest",
+              "gpt-4o-mini",
+              "gpt-4-turbo",
+              "gpt-4",
+              "gpt-3.5-turbo",
+          ],
+          imageUploadsSupported: true
+      ),
+      "ollama": defaultApiConfiguration(
+          name: "Ollama",
+          url: "http://localhost:11434/api/chat",
+          apiKeyRef: "",
+          apiModelRef: "https://ollama.com/library",
+          defaultModel: "llama3.1",
+          models: [
+              "llama3.3",
+              "llama3.2",
+              "llama3.1",
+              "llama3.1:70b",
+              "llama3.1:400b",
+              "qwen2.5:3b",
+              "qwen2.5",
+              "qwen2.5:14b",
+              "qwen2.5:32b",
+              "qwen2.5:72b",
+              "qwen2.5-coder",
+              "phi3",
+              "gemma",
+          ],
+          imageUploadsSupported: true
+      ),
+      "claude": defaultApiConfiguration(
+          name: "Claude",
+          url: "https://api.anthropic.com/v1/messages",
+          apiKeyRef: "https://docs.anthropic.com/en/docs/initial-setup#prerequisites",
+          apiModelRef: "https://docs.anthropic.com/en/docs/about-claude/models",
+          defaultModel: "claude-3-5-sonnet-latest",
+          models: [
+              "claude-3-5-sonnet-latest",
+              "claude-3-opus-latest",
+              "claude-3-haiku-20240307",
+          ],
+          maxTokens: 4096,
+          imageUploadsSupported: true
+      ),
+      "xai": defaultApiConfiguration(
+          name: "xAI",
+          url: "https://api.x.ai/v1/chat/completions",
+          apiKeyRef: "https://console.x.ai/",
+          apiModelRef: "https://docs.x.ai/docs#models",
+          defaultModel: "grok-beta",
+          models: ["grok-beta"],
+          inherits: "chatgpt"
+      ),
+      "gemini": defaultApiConfiguration(
+          name: "Google Gemini",
+          url: "https://generativelanguage.googleapis.com/v1beta/chat/completions",
+          apiKeyRef: "https://aistudio.google.com/app/apikey",
+          apiModelRef: "https://ai.google.dev/gemini-api/docs/models/gemini#model-variations",
+          defaultModel: "gemini-1.5-flash",
+          models: [
+              "gemini-2.0-flash-exp",
+              "gemini-1.5-flash",
+              "gemini-1.5-flash-8b",
+              "gemini-1.5-pro",
+          ],
+          imageUploadsSupported: true
+      ),
+      "perplexity": defaultApiConfiguration(
+          name: "Perplexity",
+          url: "https://api.perplexity.ai/chat/completions",
+          apiKeyRef: "https://www.perplexity.ai/settings/api",
+          apiModelRef: "https://docs.perplexity.ai/guides/model-cards#supported-models",
+          defaultModel: "llama-3.1-sonar-large-128k-online",
+          models: [
+              "sonar-reasoning-pro",
+              "sonar-reasoning",
+              "sonar-pro",
+              "sonar",
+              "llama-3.1-sonar-small-128k-online",
+              "llama-3.1-sonar-large-128k-online",
+              "llama-3.1-sonar-huge-128k-online",
+          ],
+          modelsFetching: false,
+          imageUploadsSupported: true
+      ),
+      "deepseek": defaultApiConfiguration(
+          name: "DeepSeek",
+          url: "https://api.deepseek.com/chat/completions",
+          apiKeyRef: "https://api-docs.deepseek.com/",
+          apiModelRef: "https://api-docs.deepseek.com/quick_start/pricing",
+          defaultModel: "deepseek-chat",
+          models: [
+              "deepseek-chat",
+              "deepseek-reasoner",
+          ],
+          imageUploadsSupported: true
+      ),
+      "openrouter": defaultApiConfiguration(
+          name: "OpenRouter",
+          url: "https://openrouter.ai/api/v1/chat/completions",
+          apiKeyRef: "https://openrouter.ai/docs/api-reference/authentication#using-an-api-key",
+          apiModelRef: "https://openrouter.ai/docs/overview/models",
+          defaultModel: "deepseek/deepseek-r1:free",
+          models: [
+              "openai/gpt-4o",
+              "deepseek/deepseek-r1:free",
+          ],
+          imageUploadsSupported: true
+      ),
+  ]
+  
+  static var defaultApiConfigurations:[String:defaultApiConfiguration]{
+    if #available(macOS 26.0,iOS 26.0, *) {
+     let newConfigs = ["applefoundationmodels": defaultApiConfiguration(
+        name: "Apple Foundation Models",
+        url: "https://apple-foundation-models.local",
+        apiKeyRef: "",
+        apiModelRef: "https://developer.apple.com/documentation/foundationmodels",
+        defaultModel: "system-language-model",
+        models: ["system-language-model"],
+        modelsFetching: false,
+        imageUploadsSupported: false
+      )]
+      
+      defaultConfigurations.merge(newConfigs, uniquingKeysWith: { old, _ in old })
+      return defaultConfigurations
+    }else{
+      return  defaultConfigurations
+    }
+  }
 
-    static let defaultApiConfigurations = [
-        "chatgpt": defaultApiConfiguration(
-            name: "OpenAI",
-            url: "https://api.openai.com/v1/chat/completions",
-            apiKeyRef: "https://platform.openai.com/docs/api-reference/api-keys",
-            apiModelRef: "https://platform.openai.com/docs/models",
-            defaultModel: "gpt-4o",
-            models: [
-                "o1-preview",
-                "o1-mini",
-                "gpt-4o",
-                "chatgpt-4o-latest",
-                "gpt-4o-mini",
-                "gpt-4-turbo",
-                "gpt-4",
-                "gpt-3.5-turbo",
-            ],
-            imageUploadsSupported: true
-        ),
-        "ollama": defaultApiConfiguration(
-            name: "Ollama",
-            url: "http://localhost:11434/api/chat",
-            apiKeyRef: "",
-            apiModelRef: "https://ollama.com/library",
-            defaultModel: "llama3.1",
-            models: [
-                "llama3.3",
-                "llama3.2",
-                "llama3.1",
-                "llama3.1:70b",
-                "llama3.1:400b",
-                "qwen2.5:3b",
-                "qwen2.5",
-                "qwen2.5:14b",
-                "qwen2.5:32b",
-                "qwen2.5:72b",
-                "qwen2.5-coder",
-                "phi3",
-                "gemma",
-            ],
-            imageUploadsSupported: true
-        ),
-        "claude": defaultApiConfiguration(
-            name: "Claude",
-            url: "https://api.anthropic.com/v1/messages",
-            apiKeyRef: "https://docs.anthropic.com/en/docs/initial-setup#prerequisites",
-            apiModelRef: "https://docs.anthropic.com/en/docs/about-claude/models",
-            defaultModel: "claude-3-5-sonnet-latest",
-            models: [
-                "claude-3-5-sonnet-latest",
-                "claude-3-opus-latest",
-                "claude-3-haiku-20240307",
-            ],
-            maxTokens: 4096,
-            imageUploadsSupported: true
-        ),
-        "xai": defaultApiConfiguration(
-            name: "xAI",
-            url: "https://api.x.ai/v1/chat/completions",
-            apiKeyRef: "https://console.x.ai/",
-            apiModelRef: "https://docs.x.ai/docs#models",
-            defaultModel: "grok-beta",
-            models: ["grok-beta"],
-            inherits: "chatgpt"
-        ),
-        "gemini": defaultApiConfiguration(
-            name: "Google Gemini",
-            url: "https://generativelanguage.googleapis.com/v1beta/chat/completions",
-            apiKeyRef: "https://aistudio.google.com/app/apikey",
-            apiModelRef: "https://ai.google.dev/gemini-api/docs/models/gemini#model-variations",
-            defaultModel: "gemini-1.5-flash",
-            models: [
-                "gemini-2.0-flash-exp",
-                "gemini-1.5-flash",
-                "gemini-1.5-flash-8b",
-                "gemini-1.5-pro",
-            ],
-            imageUploadsSupported: true
-        ),
-        "perplexity": defaultApiConfiguration(
-            name: "Perplexity",
-            url: "https://api.perplexity.ai/chat/completions",
-            apiKeyRef: "https://www.perplexity.ai/settings/api",
-            apiModelRef: "https://docs.perplexity.ai/guides/model-cards#supported-models",
-            defaultModel: "llama-3.1-sonar-large-128k-online",
-            models: [
-                "sonar-reasoning-pro",
-                "sonar-reasoning",
-                "sonar-pro",
-                "sonar",
-                "llama-3.1-sonar-small-128k-online",
-                "llama-3.1-sonar-large-128k-online",
-                "llama-3.1-sonar-huge-128k-online",
-            ],
-            modelsFetching: false,
-            imageUploadsSupported: true
-        ),
-        "deepseek": defaultApiConfiguration(
-            name: "DeepSeek",
-            url: "https://api.deepseek.com/chat/completions",
-            apiKeyRef: "https://api-docs.deepseek.com/",
-            apiModelRef: "https://api-docs.deepseek.com/quick_start/pricing",
-            defaultModel: "deepseek-chat",
-            models: [
-                "deepseek-chat",
-                "deepseek-reasoner",
-            ],
-            imageUploadsSupported: true
-        ),
-        "openrouter": defaultApiConfiguration(
-            name: "OpenRouter",
-            url: "https://openrouter.ai/api/v1/chat/completions",
-            apiKeyRef: "https://openrouter.ai/docs/api-reference/authentication#using-an-api-key",
-            apiModelRef: "https://openrouter.ai/docs/overview/models",
-            defaultModel: "deepseek/deepseek-r1:free",
-            models: [
-                "openai/gpt-4o",
-                "deepseek/deepseek-r1:free",
-            ],
-            imageUploadsSupported: true
-        ),
-        "applefoundationmodels": defaultApiConfiguration(
-            name: "Apple Foundation Models",
-            url: "https://apple-foundation-models.local",
-            apiKeyRef: "",
-            apiModelRef: "https://developer.apple.com/documentation/foundationmodels",
-            defaultModel: "system-language-model",
-            models: ["system-language-model"],
-            modelsFetching: false,
-            imageUploadsSupported: false
-        ),
-    ]
-
-    static let apiTypes = ["chatgpt", "ollama", "claude", "xai", "gemini", "perplexity", "deepseek", "openrouter", "applefoundationmodels"]
+  static var apiTypes:[String] {
+    if #available(macOS 26.0,iOS 26.0, *) {
+      ["chatgpt", "ollama", "claude", "xai", "gemini", "perplexity", "deepseek", "openrouter", "applefoundationmodels"]
+    }else{
+      ["chatgpt", "ollama", "claude", "xai", "gemini", "perplexity", "deepseek", "openrouter"]
+    }}
+  
     static let newChatNotification = Notification.Name("newChatNotification")
     static let largeMessageSymbolsThreshold = 25000
     static let thumbnailSize: CGFloat = 300
@@ -285,6 +300,7 @@ struct AppConstants {
     static let defaultHighlightColor = "#FFFF00"
     static let currentHighlightColor = "#FFA500"
 }
+
 
 func getCurrentFormattedDate() -> String {
     let dateFormatter = DateFormatter()

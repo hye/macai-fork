@@ -18,7 +18,7 @@ class APIServiceFactory {
   static func createAPIService(config: APIServiceConfiguration) -> APIService {
         let configName =
             AppConstants.defaultApiConfigurations[config.name.lowercased()]?.inherits ?? config.name.lowercased()
-    if #available(macOS 26.0, *) {
+    if #available(macOS 26.0,iOS 26.0, *) {
       if ["applefoundationmodels","apple foundation models"].contains(configName){
         let modelService = AppleFoundationModelsHandler()
         return ModelServiceAdapter.create(for: modelService)
