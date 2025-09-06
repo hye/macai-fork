@@ -12,7 +12,8 @@ import BackgroundAssets
 
 /// Apple Foundation Models 服務處理器
 /// 實現 ModelService 協議，使用 Apple's FoundationModels 框架
-
+@available(iOS 26.0, *)
+@available(macOS 26.0, *)
 class AppleFoundationModelsHandler: ModelService {
     /// 服務名稱
     let name: String = "Apple Foundation Models"
@@ -117,6 +118,8 @@ class AppleFoundationModelsHandler: ModelService {
 }
 
 /// Apple Foundation Models 自定義適配器
+@available(iOS 26.0, *)
+@available(macOS 26.0, *)
 class AppleFoundationModelAdapter: ModelAdapter {
     /// 適配器名稱
     let name: String
@@ -205,6 +208,8 @@ class AppleFoundationModelAdapter: ModelAdapter {
 }
 
 /// Apple Foundation Models 會話實現
+@available(iOS 26.0, *)
+@available(macOS 26.0, *)
 class AppleFoundationModelSession: ModelSession {
     /// 檢查是否正在回應
     var isResponding: Bool = false

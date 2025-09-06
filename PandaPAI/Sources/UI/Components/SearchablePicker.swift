@@ -53,7 +53,10 @@ struct SearchablePicker<SelectionValue: Hashable, Label: View>: View {
             if isExpanded {
                 VStack(spacing: 0) {
                     // 搜索框
-                    TextField("搜索选项...", text: $searchText)                        .textInputAutocapitalization(.none)
+                    TextField("搜索选项...", text: $searchText)
+                  #if os(iOS)
+                    .textInputAutocapitalization(.none)
+                  #endif
                       .autocorrectionDisabled()
 
                         .padding(10)

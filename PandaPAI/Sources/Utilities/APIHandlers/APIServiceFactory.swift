@@ -14,11 +14,16 @@ class APIServiceFactory {
         configuration.timeoutIntervalForResource = AppConstants.requestTimeout
         return URLSession(configuration: configuration)
     }()
-
-    static func createAPIService(config: APIServiceConfiguration) -> APIService {
+  
+  static func createAPIService(config: APIServiceConfiguration) -> APIService {
         let configName =
             AppConstants.defaultApiConfigurations[config.name.lowercased()]?.inherits ?? config.name.lowercased()
-
+    if #available(macOS 26.0, *) {
+      if ["applefoundationmodels","apple foundation models"].contains(configName){
+        let modelService = AppleFoundationModelsHandler()
+        return ModelServiceAdapter.create(for: modelService)
+      }
+    }
         switch configName {
         case "chatgpt":
             return ChatGPTHandler(config: config, session: session)
@@ -34,10 +39,8 @@ class APIServiceFactory {
             return DeepseekHandler(config: config, session: session)
         case "openrouter":
             return OpenRouterHandler(config: config, session: session)
-        case "applefoundationmodels", "apple foundation models":
-            // 創建 Apple Foundation Models 服務
-            let modelService = AppleFoundationModelsHandler()
-            return ModelServiceAdapter.create(for: modelService)
+        case "applefoundationmodels","apple foundation models":
+           return ChatGPTHandler(config: config, session: session)
         default:
             fatalError("Unsupported API service: \(config.name)")
         }

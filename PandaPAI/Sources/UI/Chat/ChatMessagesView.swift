@@ -83,7 +83,10 @@ struct ChatMessagesView: View {
                 .padding(24)
                 .contentShape(Rectangle())
                 .onTapGesture(count: 2) {
+                  #if os(iOS)
+
                   UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
+                  #endif
                 }
                 .onAppear {
                     pendingCodeBlocks = chatViewModel.sortedMessages.reduce(0) { count, message in

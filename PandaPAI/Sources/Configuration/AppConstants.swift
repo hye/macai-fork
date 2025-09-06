@@ -45,7 +45,7 @@ struct AppConstants {
     struct PersonaPresets {
         static let defaultAssistant = Persona(
             name: "Default Assistant",
-            color: "#FF4444",
+            color: "#EEEEEE",
             message:
                 "You are Large Language Model. Answer as concisely as possible. Your answers should be informative, helpful and engaging.",
             temperature: 0.7

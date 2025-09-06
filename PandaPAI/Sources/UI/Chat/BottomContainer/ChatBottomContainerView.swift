@@ -91,7 +91,9 @@ struct ChatBottomContainerView: View {
                 .border(width: 1, edges: [.top], color: Color.primary.opacity(0.1))
                 .contentShape(Rectangle())
                 .onTapGesture(count: 2) {
+                  #if os(iOS)
                   UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
+                  #endif
                 }
             }
         }
