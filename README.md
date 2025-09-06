@@ -1,12 +1,14 @@
 <div align="center">
 <img width="256" src="https://github.com/user-attachments/assets/3b5b5587-a83f-4133-b00d-9a8c509661df" />
 </div>
-<h2 align="center">macai</h2>
+<h2 align="center">(fork of) macai</h2>
 
 <a href="#"><img alt="GitHub top language" src="https://img.shields.io/github/languages/top/Renset/macai"></a> <a href="#"><img alt="GitHub code size in bytes" src="https://img.shields.io/github/languages/code-size/Renset/macai"></a> <a href="https://github.com/Renset/macai/actions/workflows/swift-xcode.yml"><img alt="GitHub Workflow Status" src="https://img.shields.io/github/actions/workflow/status/Renset/macai/swift-xcode.yml"></a> <a href="https://github.com/Renset/macai/blob/main/LICENSE.md"><img alt="GitHub" src="https://img.shields.io/github/license/Renset/macai"></a>
 <a href="https://github.com/Renset/macai/releases/latest"><img alt="GitHub all releases" src="https://img.shields.io/github/downloads/Renset/macai/total"></a>
 
 macai (macOS AI) is a simple yet powerful native macOS AI chat client that supports most AI providers: ChatGPT, Claude, xAI (Grok), Google Gemini, Perplexity, Ollama, OpenRouter, and almost any OpenAI-compatible APIs.
+
+This is a personal fork where I'm experimenting with adding iOS support and Apple Foundation Models support. The current code quality isn't polished enough for a pull request yet.
 
 <img width="1322" alt="macai window" src="https://github.com/user-attachments/assets/3a9677e4-0d75-4d19-9d5f-3d74b896fcf8">
 

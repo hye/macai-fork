@@ -38,4 +38,10 @@ DerivedData/
 *.DS_Store
 *.Trash
 *.xcworkspace/xcuserdata/*/UserInterfaceState.xcuserstate
-macai.xcodeproj/project.xcworkspace/xcuserdata/*/UserInterfaceState.xcuserstate
+
+PandaPAI.xcodeproj/
+PandaPAI.xcworkspace/
+Tuist/.build/
+Derived/
+.kilocode/
+deprecated/
